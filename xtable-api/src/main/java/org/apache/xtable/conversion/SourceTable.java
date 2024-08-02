@@ -23,20 +23,26 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
+import java.util.Properties;
+
 @EqualsAndHashCode(callSuper = true)
 @Getter
 public class SourceTable extends ExternalTable {
-  @NonNull String dataPath;
+  /**
+   * The path to the data files, defaults to the metadataPath
+   */
+  @NonNull private final String dataPath;
 
   @Builder(toBuilder = true)
   public SourceTable(
       String name,
       String formatName,
-      String metadataPath,
+      String basePath,
       String dataPath,
       String[] namespace,
-      CatalogConfig catalogConfig) {
-    super(name, formatName, metadataPath, namespace, catalogConfig);
-    this.dataPath = dataPath == null ? this.metadataPath : sanitizeBasePath(dataPath);
+      CatalogConfig catalogConfig,
+      Properties additionalProperties) {
+    super(name, formatName, basePath, namespace, catalogConfig, additionalProperties);
+    this.dataPath = dataPath == null ? this.getBasePath() : sanitizeBasePath(dataPath);
   }
 }

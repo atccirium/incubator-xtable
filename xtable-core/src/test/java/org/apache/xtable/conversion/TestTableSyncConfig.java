@@ -38,7 +38,6 @@ class TestTableSyncConfig {
             .targetTables(Collections.singletonList(mock(TargetTable.class)))
             .build();
 
-    assertEquals(Collections.emptyMap(), tableSyncConfig.getProperties());
     assertEquals(SyncMode.INCREMENTAL, tableSyncConfig.getSyncMode());
   }
 

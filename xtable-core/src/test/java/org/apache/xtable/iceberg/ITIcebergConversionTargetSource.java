@@ -29,7 +29,6 @@ import java.nio.file.Path;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -99,11 +98,11 @@ public class ITIcebergConversionTargetSource {
       SourceTable tableConfig =
           SourceTable.builder()
               .name(testIcebergTable.getTableName())
-              .metadataPath(testIcebergTable.getBasePath())
+              .basePath(testIcebergTable.getBasePath())
               .formatName(TableFormat.ICEBERG)
               .build();
       IcebergConversionSource conversionSource =
-          sourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+          sourceProvider.getConversionSourceInstance(tableConfig);
       assertEquals(180L, testIcebergTable.getNumRows());
       InternalSnapshot internalSnapshot = conversionSource.getCurrentSnapshot();
 
@@ -159,11 +158,11 @@ public class ITIcebergConversionTargetSource {
       SourceTable tableConfig =
           SourceTable.builder()
               .name(testIcebergTable.getTableName())
-              .metadataPath(testIcebergTable.getBasePath())
+              .basePath(testIcebergTable.getBasePath())
               .formatName(TableFormat.ICEBERG)
               .build();
       IcebergConversionSource conversionSource =
-          sourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+          sourceProvider.getConversionSourceInstance(tableConfig);
       assertEquals(
           120 - recordsByPartition.get(partitionValueToDelete).size(),
           testIcebergTable.getNumRows());
@@ -219,11 +218,11 @@ public class ITIcebergConversionTargetSource {
       SourceTable tableConfig =
           SourceTable.builder()
               .name(testIcebergTable.getTableName())
-              .metadataPath(testIcebergTable.getBasePath())
+              .basePath(testIcebergTable.getBasePath())
               .formatName(TableFormat.ICEBERG)
               .build();
       IcebergConversionSource conversionSource =
-          sourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+          sourceProvider.getConversionSourceInstance(tableConfig);
       assertEquals(
           120 - recordsByPartition.get(partitionValueToDelete).size(),
           testIcebergTable.getNumRows());
@@ -279,11 +278,11 @@ public class ITIcebergConversionTargetSource {
       SourceTable tableConfig =
           SourceTable.builder()
               .name(testIcebergTable.getTableName())
-              .metadataPath(testIcebergTable.getBasePath())
+              .basePath(testIcebergTable.getBasePath())
               .formatName(TableFormat.ICEBERG)
               .build();
       IcebergConversionSource conversionSource =
-          sourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+          sourceProvider.getConversionSourceInstance(tableConfig);
       assertEquals(200L, testIcebergTable.getNumRows());
       InternalSnapshot internalSnapshot = conversionSource.getCurrentSnapshot();
 
@@ -320,7 +319,7 @@ public class ITIcebergConversionTargetSource {
       SourceTable tableConfig =
           SourceTable.builder()
               .name(testIcebergTable.getTableName())
-              .metadataPath(testIcebergTable.getBasePath())
+              .basePath(testIcebergTable.getBasePath())
               .formatName(TableFormat.ICEBERG)
               .build();
 
@@ -336,7 +335,7 @@ public class ITIcebergConversionTargetSource {
         testIcebergTable.expireSnapshot(snapshotIdAfterCommit2);
       }
       IcebergConversionSource conversionSource =
-          sourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+          sourceProvider.getConversionSourceInstance(tableConfig);
       if (shouldExpireSnapshots) {
         assertFalse(conversionSource.isIncrementalSyncSafeFrom(Instant.ofEpochMilli(timestamp1)));
       } else {

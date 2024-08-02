@@ -104,7 +104,7 @@ public class IcebergConversionTarget implements ConversionTarget {
     this.partitionSpecSync = partitionSpecSync;
     this.dataFileUpdatesExtractor = dataFileUpdatesExtractor;
     String tableName = targetTable.getName();
-    this.basePath = targetTable.getMetadataPath();
+    this.basePath = targetTable.getBasePath();
     this.configuration = configuration;
     this.snapshotRetentionInHours = (int) targetTable.getMetadataRetention().toHours();
     String[] namespace = targetTable.getNamespace();

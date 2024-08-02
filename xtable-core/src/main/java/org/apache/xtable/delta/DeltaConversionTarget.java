@@ -83,7 +83,7 @@ public class DeltaConversionTarget implements ConversionTarget {
 
   public DeltaConversionTarget(TargetTable targetTable, SparkSession sparkSession) {
     this(
-        targetTable.getMetadataPath(),
+        targetTable.getBasePath(),
         targetTable.getName(),
         targetTable.getMetadataRetention().toHours(),
         sparkSession,
@@ -138,7 +138,7 @@ public class DeltaConversionTarget implements ConversionTarget {
     SparkSession sparkSession = DeltaConversionUtils.buildSparkSession(configuration);
 
     _init(
-        targetTable.getMetadataPath(),
+        targetTable.getBasePath(),
         targetTable.getName(),
         targetTable.getMetadataRetention().toHours(),
         sparkSession,

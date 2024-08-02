@@ -96,7 +96,7 @@ public class IcebergConversionSource implements ConversionSource<Snapshot> {
     return tableManager.getTable(
         (IcebergCatalogConfig) sourceTableConfig.getCatalogConfig(),
         tableIdentifier,
-        sourceTableConfig.getMetadataPath());
+        sourceTableConfig.getBasePath());
   }
 
   private FileIO initTableOps() {

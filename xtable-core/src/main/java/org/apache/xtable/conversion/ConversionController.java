@@ -87,8 +87,7 @@ public class ConversionController {
     }
 
     try (ConversionSource<COMMIT> conversionSource =
-        conversionSourceProvider.getConversionSourceInstance(
-            config.getSourceTable(), config.getProperties())) {
+        conversionSourceProvider.getConversionSourceInstance(config.getSourceTable())) {
       ExtractFromSource<COMMIT> source = ExtractFromSource.of(conversionSource);
 
       Map<String, ConversionTarget> conversionTargetByFormat =

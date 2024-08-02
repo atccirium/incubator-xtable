@@ -24,6 +24,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -135,12 +136,15 @@ public class LoadTest {
 
   private static TableSyncConfig getTableSyncConfig(
       SyncMode syncMode, String tableName, GenericTable table, List<String> targetTableFormats) {
+    Properties sourceProperties = new Properties();
+    sourceProperties.put(PARTITION_FIELD_SPEC_CONFIG, "level:VALUE");
     SourceTable sourceTable =
         SourceTable.builder()
             .name(tableName)
             .formatName(TableFormat.HUDI)
-            .metadataPath(table.getBasePath())
+            .basePath(table.getBasePath())
             .dataPath(table.getDataPath())
+            .additionalProperties(sourceProperties)
             .build();
 
     List<TargetTable> targetTables =
@@ -150,7 +154,7 @@ public class LoadTest {
                     TargetTable.builder()
                         .name(tableName)
                         .formatName(formatName)
-                        .metadataPath(table.getBasePath())
+                        .basePath(table.getBasePath())
                         .build())
             .collect(Collectors.toList());
 
@@ -158,7 +162,6 @@ public class LoadTest {
         .sourceTable(sourceTable)
         .targetTables(targetTables)
         .syncMode(syncMode)
-        .properties(Collections.singletonMap(PARTITION_FIELD_SPEC_CONFIG, "level:VALUE"))
         .build();
   }
 }

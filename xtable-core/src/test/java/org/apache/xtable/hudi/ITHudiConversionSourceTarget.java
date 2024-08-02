@@ -584,7 +584,7 @@ public class ITHudiConversionSourceTarget {
   private HudiConversionTarget getTargetClient() {
     return new HudiConversionTarget(
         TargetTable.builder()
-            .metadataPath(tableBasePath)
+            .basePath(tableBasePath)
             .formatName(TableFormat.HUDI)
             .name("test_table")
             .metadataRetention(Duration.of(4, ChronoUnit.HOURS))

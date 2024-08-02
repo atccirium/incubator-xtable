@@ -26,7 +26,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -93,7 +92,7 @@ class TestIcebergConversionTargetSource {
     SourceTable sourceTableConfig = getPerTableConfig(catalogSales);
 
     IcebergConversionSource conversionSource =
-        sourceProvider.getConversionSourceInstance(sourceTableConfig, Collections.emptyMap());
+        sourceProvider.getConversionSourceInstance(sourceTableConfig);
 
     Snapshot snapshot = catalogSales.currentSnapshot();
     InternalTable internalTable = conversionSource.getTable(snapshot);

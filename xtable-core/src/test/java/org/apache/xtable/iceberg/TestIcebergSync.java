@@ -192,7 +192,7 @@ public class TestIcebergSync {
   private IcebergConversionTarget getConversionTarget() {
     return new IcebergConversionTarget(
         TargetTable.builder()
-            .metadataPath(basePath.toString())
+            .basePath(basePath.toString())
             .name(tableName)
             .metadataRetention(Duration.of(1, ChronoUnit.HOURS))
             .formatName(TableFormat.ICEBERG)

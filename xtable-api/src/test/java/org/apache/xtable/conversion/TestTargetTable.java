@@ -27,9 +27,9 @@ import org.junit.jupiter.api.Test;
 class TestTargetTable {
   @Test
   void retentionDefaultsToSevenDays() {
-    String metadataPath = "file:///path/to/table";
+    String basePath = "file:///path/to/table";
     TargetTable targetTable =
-        TargetTable.builder().name("name").formatName("hudi").metadataPath(metadataPath).build();
+        TargetTable.builder().name("name").formatName("hudi").basePath(basePath).build();
     assertEquals(Duration.ofDays(7), targetTable.getMetadataRetention());
   }
 }

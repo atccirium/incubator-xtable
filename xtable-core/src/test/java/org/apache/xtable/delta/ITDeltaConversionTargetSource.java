@@ -167,11 +167,11 @@ public class ITDeltaConversionTargetSource {
     SourceTable tableConfig =
         SourceTable.builder()
             .name(tableName)
-            .metadataPath(basePath.toString())
+            .basePath(basePath.toString())
             .formatName(TableFormat.DELTA)
             .build();
     DeltaConversionSource conversionSource =
-        conversionSourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+        conversionSourceProvider.getConversionSourceInstance(tableConfig);
     // Get current snapshot
     InternalSnapshot snapshot = conversionSource.getCurrentSnapshot();
     // Validate table
@@ -225,11 +225,11 @@ public class ITDeltaConversionTargetSource {
     SourceTable tableConfig =
         SourceTable.builder()
             .name(tableName)
-            .metadataPath(basePath.toString())
+            .basePath(basePath.toString())
             .formatName(TableFormat.DELTA)
             .build();
     DeltaConversionSource conversionSource =
-        conversionSourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+        conversionSourceProvider.getConversionSourceInstance(tableConfig);
     // Get current snapshot
     InternalSnapshot snapshot = conversionSource.getCurrentSnapshot();
     // Validate table
@@ -313,11 +313,11 @@ public class ITDeltaConversionTargetSource {
     SourceTable tableConfig =
         SourceTable.builder()
             .name(tableName)
-            .metadataPath(basePath.toString())
+            .basePath(basePath.toString())
             .formatName(TableFormat.DELTA)
             .build();
     DeltaConversionSource conversionSource =
-        conversionSourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+        conversionSourceProvider.getConversionSourceInstance(tableConfig);
     // Get current snapshot
     InternalSnapshot snapshot = conversionSource.getCurrentSnapshot();
   }
@@ -352,11 +352,11 @@ public class ITDeltaConversionTargetSource {
     SourceTable tableConfig =
         SourceTable.builder()
             .name(testSparkDeltaTable.getTableName())
-            .metadataPath(testSparkDeltaTable.getBasePath())
+            .basePath(testSparkDeltaTable.getBasePath())
             .formatName(TableFormat.DELTA)
             .build();
     DeltaConversionSource conversionSource =
-        conversionSourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+        conversionSourceProvider.getConversionSourceInstance(tableConfig);
     assertEquals(180L, testSparkDeltaTable.getNumRows());
     InternalSnapshot internalSnapshot = conversionSource.getCurrentSnapshot();
 
@@ -392,11 +392,11 @@ public class ITDeltaConversionTargetSource {
     SourceTable tableConfig =
         SourceTable.builder()
             .name(testSparkDeltaTable.getTableName())
-            .metadataPath(testSparkDeltaTable.getBasePath())
+            .basePath(testSparkDeltaTable.getBasePath())
             .formatName(TableFormat.DELTA)
             .build();
     DeltaConversionSource conversionSource =
-        conversionSourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+        conversionSourceProvider.getConversionSourceInstance(tableConfig);
     InternalSnapshot snapshotAfterCommit1 = conversionSource.getCurrentSnapshot();
     List<String> allActivePaths = ValidationTestHelper.getAllFilePaths(snapshotAfterCommit1);
     assertEquals(1, allActivePaths.size());
@@ -416,7 +416,7 @@ public class ITDeltaConversionTargetSource {
             .lastSyncInstant(Instant.ofEpochMilli(timestamp1))
             .build();
     conversionSource =
-        conversionSourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+        conversionSourceProvider.getConversionSourceInstance(tableConfig);
     CommitsBacklog<Long> instantCurrentCommitState =
         conversionSource.getCommitsBacklog(instantsForIncrementalSync);
     boolean areFilesRemoved = false;
@@ -461,11 +461,11 @@ public class ITDeltaConversionTargetSource {
     SourceTable tableConfig =
         SourceTable.builder()
             .name(testSparkDeltaTable.getTableName())
-            .metadataPath(testSparkDeltaTable.getBasePath())
+            .basePath(testSparkDeltaTable.getBasePath())
             .formatName(TableFormat.DELTA)
             .build();
     DeltaConversionSource conversionSource =
-        conversionSourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+        conversionSourceProvider.getConversionSourceInstance(tableConfig);
     assertEquals(130L, testSparkDeltaTable.getNumRows());
     InternalSnapshot internalSnapshot = conversionSource.getCurrentSnapshot();
     if (isPartitioned) {
@@ -509,11 +509,11 @@ public class ITDeltaConversionTargetSource {
     SourceTable tableConfig =
         SourceTable.builder()
             .name(testSparkDeltaTable.getTableName())
-            .metadataPath(testSparkDeltaTable.getBasePath())
+            .basePath(testSparkDeltaTable.getBasePath())
             .formatName(TableFormat.DELTA)
             .build();
     DeltaConversionSource conversionSource =
-        conversionSourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+        conversionSourceProvider.getConversionSourceInstance(tableConfig);
     assertEquals(150L, testSparkDeltaTable.getNumRows());
     InternalSnapshot internalSnapshot = conversionSource.getCurrentSnapshot();
     if (isPartitioned) {
@@ -566,11 +566,11 @@ public class ITDeltaConversionTargetSource {
     SourceTable tableConfig =
         SourceTable.builder()
             .name(testSparkDeltaTable.getTableName())
-            .metadataPath(testSparkDeltaTable.getBasePath())
+            .basePath(testSparkDeltaTable.getBasePath())
             .formatName(TableFormat.DELTA)
             .build();
     DeltaConversionSource conversionSource =
-        conversionSourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+        conversionSourceProvider.getConversionSourceInstance(tableConfig);
     assertEquals(
         120 - rowsByPartition.get(partitionValueToDelete).size(), testSparkDeltaTable.getNumRows());
     InternalSnapshot internalSnapshot = conversionSource.getCurrentSnapshot();
@@ -626,11 +626,11 @@ public class ITDeltaConversionTargetSource {
     SourceTable tableConfig =
         SourceTable.builder()
             .name(testSparkDeltaTable.getTableName())
-            .metadataPath(testSparkDeltaTable.getBasePath())
+            .basePath(testSparkDeltaTable.getBasePath())
             .formatName(TableFormat.DELTA)
             .build();
     DeltaConversionSource conversionSource =
-        conversionSourceProvider.getConversionSourceInstance(tableConfig, Collections.emptyMap());
+        conversionSourceProvider.getConversionSourceInstance(tableConfig);
     assertEquals(250L, testSparkDeltaTable.getNumRows());
     InternalSnapshot internalSnapshot = conversionSource.getCurrentSnapshot();
     if (isPartitioned) {

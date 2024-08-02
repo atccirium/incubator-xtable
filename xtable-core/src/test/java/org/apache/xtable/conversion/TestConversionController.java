@@ -82,7 +82,7 @@ public class TestConversionController {
     TableSyncConfig tableSyncConfig =
         getTableSyncConfig(Arrays.asList(TableFormat.ICEBERG, TableFormat.DELTA), syncMode);
     when(mockConversionSourceProvider.getConversionSourceInstance(
-            tableSyncConfig.getSourceTable(), tableSyncConfig.getProperties()))
+            tableSyncConfig.getSourceTable()))
         .thenReturn(mockConversionSource);
     when(mockConversionTargetFactory.createForFormat(
             tableSyncConfig.getTargetTables().get(0), mockConf))
@@ -108,7 +108,7 @@ public class TestConversionController {
     TableSyncConfig tableSyncConfig =
         getTableSyncConfig(Arrays.asList(TableFormat.ICEBERG, TableFormat.DELTA), syncMode);
     when(mockConversionSourceProvider.getConversionSourceInstance(
-            tableSyncConfig.getSourceTable(), tableSyncConfig.getProperties()))
+            tableSyncConfig.getSourceTable()))
         .thenReturn(mockConversionSource);
     when(mockConversionTargetFactory.createForFormat(
             tableSyncConfig.getTargetTables().get(0), mockConf))
@@ -201,7 +201,7 @@ public class TestConversionController {
     TableSyncConfig tableSyncConfig =
         getTableSyncConfig(Arrays.asList(TableFormat.ICEBERG, TableFormat.DELTA), syncMode);
     when(mockConversionSourceProvider.getConversionSourceInstance(
-            tableSyncConfig.getSourceTable(), tableSyncConfig.getProperties()))
+            tableSyncConfig.getSourceTable()))
         .thenReturn(mockConversionSource);
     when(mockConversionTargetFactory.createForFormat(
             tableSyncConfig.getTargetTables().get(0), mockConf))
@@ -238,7 +238,7 @@ public class TestConversionController {
     TableSyncConfig tableSyncConfig =
         getTableSyncConfig(Arrays.asList(TableFormat.ICEBERG, TableFormat.DELTA), syncMode);
     when(mockConversionSourceProvider.getConversionSourceInstance(
-            tableSyncConfig.getSourceTable(), tableSyncConfig.getProperties()))
+            tableSyncConfig.getSourceTable()))
         .thenReturn(mockConversionSource);
     when(mockConversionTargetFactory.createForFormat(
             tableSyncConfig.getTargetTables().get(0), mockConf))
@@ -322,7 +322,7 @@ public class TestConversionController {
     TableSyncConfig tableSyncConfig =
         getTableSyncConfig(Arrays.asList(TableFormat.ICEBERG, TableFormat.DELTA), syncMode);
     when(mockConversionSourceProvider.getConversionSourceInstance(
-            tableSyncConfig.getSourceTable(), tableSyncConfig.getProperties()))
+            tableSyncConfig.getSourceTable()))
         .thenReturn(mockConversionSource);
     when(mockConversionTargetFactory.createForFormat(
             tableSyncConfig.getTargetTables().get(0), mockConf))

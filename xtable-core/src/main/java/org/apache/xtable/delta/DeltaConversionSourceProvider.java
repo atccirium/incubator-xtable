@@ -30,14 +30,13 @@ import org.apache.xtable.conversion.SourceTable;
 /** A concrete implementation of {@link ConversionSourceProvider} for Delta Lake table format. */
 public class DeltaConversionSourceProvider extends ConversionSourceProvider<Long> {
   @Override
-  public DeltaConversionSource getConversionSourceInstance(
-      SourceTable sourceTable, Map<String, String> clientConf) {
+  public DeltaConversionSource getConversionSourceInstance(SourceTable sourceTable) {
     SparkSession sparkSession = DeltaConversionUtils.buildSparkSession(hadoopConf);
-    DeltaTable deltaTable = DeltaTable.forPath(sparkSession, sourceTable.getMetadataPath());
+    DeltaTable deltaTable = DeltaTable.forPath(sparkSession, sourceTable.getBasePath());
     return DeltaConversionSource.builder()
         .sparkSession(sparkSession)
         .tableName(sourceTable.getName())
-        .basePath(sourceTable.getMetadataPath())
+        .basePath(sourceTable.getBasePath())
         .deltaTable(deltaTable)
         .deltaLog(deltaTable.deltaLog())
         .build();

@@ -26,6 +26,7 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 import lombok.Data;
@@ -151,6 +152,10 @@ public class RunSync {
           "Running sync for basePath {} for following table formats {}",
           table.getTableBasePath(),
           tableFormatList);
+      Properties sourceProperties = new Properties();
+      if (table.getPartitionSpec() != null) {
+        sourceProperties.put(HudiSourceConfig.PARTITION_FIELD_SPEC_CONFIG, table.getPartitionSpec());
+      }
       SourceTable sourceTable =
           SourceTable.builder()
               .name(table.getTableName())
@@ -158,6 +163,7 @@ public class RunSync {
               .namespace(table.getNamespace() == null ? null : table.getNamespace().split("\\."))
               .dataPath(table.getTableDataPath())
               .catalogConfig(icebergCatalogConfig)
+              .additionalProperties(sourceProperties)
               .formatName(sourceFormat)
               .build();
       List<TargetTable> targetTables =
@@ -182,9 +188,6 @@ public class RunSync {
               .sourceTable(sourceTable)
               .targetTables(targetTables)
               .syncMode(SyncMode.INCREMENTAL)
-              .properties(
-                  Collections.singletonMap(
-                      HudiSourceConfig.PARTITION_FIELD_SPEC_CONFIG, table.getPartitionSpec()))
               .build();
       try {
         conversionController.sync(tableSyncConfig, conversionSourceProvider);

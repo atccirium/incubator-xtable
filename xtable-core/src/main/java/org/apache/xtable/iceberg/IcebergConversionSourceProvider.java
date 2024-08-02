@@ -18,8 +18,6 @@
  
 package org.apache.xtable.iceberg;
 
-import java.util.Map;
-
 import org.apache.iceberg.Snapshot;
 
 import org.apache.xtable.conversion.ConversionSourceProvider;
@@ -28,8 +26,7 @@ import org.apache.xtable.conversion.SourceTable;
 /** A concrete implementation of {@link ConversionSourceProvider} for Hudi table format. */
 public class IcebergConversionSourceProvider extends ConversionSourceProvider<Snapshot> {
   @Override
-  public IcebergConversionSource getConversionSourceInstance(
-      SourceTable sourceTableConfig, Map<String, String> clientConf) {
+  public IcebergConversionSource getConversionSourceInstance(SourceTable sourceTableConfig) {
     return IcebergConversionSource.builder()
         .sourceTableConfig(sourceTableConfig)
         .hadoopConf(hadoopConf)

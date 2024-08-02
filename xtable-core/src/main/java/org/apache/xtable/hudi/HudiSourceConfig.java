@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 
 import lombok.Value;
 
@@ -48,12 +49,12 @@ public class HudiSourceConfig {
         parsePartitionFieldSpecs(partitionFieldSpecConfig));
   }
 
-  public static HudiSourceConfig fromProperties(Map<String, String> properties) {
+  public static HudiSourceConfig fromProperties(Properties properties) {
     String partitionSpecExtractorClass =
-        properties.getOrDefault(
+        properties.getProperty(
             PARTITION_SPEC_EXTRACTOR_CLASS,
             ConfigurationBasedPartitionSpecExtractor.class.getName());
-    String partitionFieldSpecString = properties.get(PARTITION_FIELD_SPEC_CONFIG);
+    String partitionFieldSpecString = properties.getProperty(PARTITION_FIELD_SPEC_CONFIG);
     List<PartitionFieldSpec> partitionFieldSpecs =
         parsePartitionFieldSpecs(partitionFieldSpecString);
     return new HudiSourceConfig(partitionSpecExtractorClass, partitionFieldSpecs);

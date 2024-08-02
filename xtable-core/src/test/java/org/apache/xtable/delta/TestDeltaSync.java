@@ -130,7 +130,7 @@ public class TestDeltaSync {
         new DeltaConversionTarget(
             TargetTable.builder()
                 .name(tableName)
-                .metadataPath(basePath.toString())
+                .basePath(basePath.toString())
                 .metadataRetention(Duration.of(1, ChronoUnit.HOURS))
                 .formatName(TableFormat.DELTA)
                 .build(),

@@ -18,8 +18,6 @@
  
 package org.apache.xtable.hudi;
 
-import java.util.Map;
-
 import lombok.extern.log4j.Log4j2;
 
 import org.apache.hudi.common.model.HoodieTableType;
@@ -35,11 +33,11 @@ public class HudiConversionSourceProvider extends ConversionSourceProvider<Hoodi
 
   @Override
   public HudiConversionSource getConversionSourceInstance(
-      SourceTable sourceTable, Map<String, String> clientConfigs) {
+      SourceTable sourceTable) {
     HoodieTableMetaClient metaClient =
         HoodieTableMetaClient.builder()
             .setConf(hadoopConf)
-            .setBasePath(sourceTable.getMetadataPath())
+            .setBasePath(sourceTable.getBasePath())
             .setLoadActiveTimelineOnLoad(true)
             .build();
     if (!metaClient.getTableConfig().getTableType().equals(HoodieTableType.COPY_ON_WRITE)) {
@@ -47,7 +45,7 @@ public class HudiConversionSourceProvider extends ConversionSourceProvider<Hoodi
     }
 
     final HudiSourcePartitionSpecExtractor sourcePartitionSpecExtractor =
-        HudiSourceConfig.fromProperties(clientConfigs).loadSourcePartitionSpecExtractor();
+        HudiSourceConfig.fromProperties(sourceTable.getAdditionalProperties()).loadSourcePartitionSpecExtractor();
 
     return new HudiConversionSource(metaClient, sourcePartitionSpecExtractor);
   }

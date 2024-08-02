@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -852,12 +853,15 @@ public class ITConversionController {
       List<String> targetTableFormats,
       String partitionConfig,
       Duration metadataRetention) {
+    Properties sourceProperties = new Properties();
+    sourceProperties.put(PARTITION_FIELD_SPEC_CONFIG, partitionConfig);
     SourceTable sourceTable =
         SourceTable.builder()
             .name(tableName)
             .formatName(sourceTableFormat)
-            .metadataPath(table.getBasePath())
+            .basePath(table.getBasePath())
             .dataPath(table.getDataPath())
+            .additionalProperties(sourceProperties)
             .build();
 
     List<TargetTable> targetTables =
@@ -868,7 +872,7 @@ public class ITConversionController {
                         .name(tableName)
                         .formatName(formatName)
                         // set the metadata path to the data path as the default (required by Hudi)
-                        .metadataPath(table.getDataPath())
+                        .basePath(table.getDataPath())
                         .metadataRetention(metadataRetention)
                         .build())
             .collect(Collectors.toList());
@@ -877,7 +881,6 @@ public class ITConversionController {
         .sourceTable(sourceTable)
         .targetTables(targetTables)
         .syncMode(syncMode)
-        .properties(Collections.singletonMap(PARTITION_FIELD_SPEC_CONFIG, partitionConfig))
         .build();
   }
 }

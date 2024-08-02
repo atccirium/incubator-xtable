@@ -26,26 +26,53 @@ import org.apache.hadoop.fs.Path;
 
 import com.google.common.base.Preconditions;
 
+import java.util.Properties;
+
+/**
+ * Defines a reference to a table in a particular format.
+ */
 @Getter
 @EqualsAndHashCode
 class ExternalTable {
-  @NonNull String name;
-  @NonNull String formatName;
-  @NonNull String metadataPath;
-  String[] namespace;
-  CatalogConfig catalogConfig;
+  /**
+   * The name of the table.
+   */
+  protected final @NonNull String name;
+  /**
+   * The format of the table (e.g. DELTA, ICEBERG, HUDI)
+   */
+  protected final @NonNull String formatName;
+  /**
+   * The path to the root of the table or the metadata directory depending on the format
+   */
+  protected final @NonNull String basePath;
+  /**
+   * Optional namespace for the table
+   */
+  protected final String[] namespace;
+  /**
+   * The configuration for interacting with the catalog that manages this table
+   */
+  protected final CatalogConfig catalogConfig;
+
+  /**
+   * Optional, additional properties that can be used to define interactions with the table
+   */
+  protected final Properties additionalProperties;
 
   ExternalTable(
       @NonNull String name,
       @NonNull String formatName,
       @NonNull String basePath,
       String[] namespace,
-      CatalogConfig catalogConfig) {
+      CatalogConfig catalogConfig,
+      Properties additionalProperties) {
     this.name = name;
     this.formatName = formatName;
-    this.metadataPath = sanitizeBasePath(basePath);
+    this.basePath = sanitizeBasePath(basePath);
     this.namespace = namespace;
     this.catalogConfig = catalogConfig;
+    this.additionalProperties = additionalProperties;
   }
 
   protected String sanitizeBasePath(String tableBasePath) {

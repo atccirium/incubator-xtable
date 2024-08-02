@@ -25,21 +25,21 @@ import org.junit.jupiter.api.Test;
 class TestSourceTable {
   @Test
   void dataPathDefaultsToMetadataPath() {
-    String metadataPath = "file:///path/to/table";
+    String basePath = "file:///path/to/table";
     SourceTable sourceTable =
-        SourceTable.builder().name("name").formatName("hudi").metadataPath(metadataPath).build();
-    assertEquals(metadataPath, sourceTable.getDataPath());
+        SourceTable.builder().name("name").formatName("hudi").basePath(basePath).build();
+    assertEquals(basePath, sourceTable.getDataPath());
   }
 
   @Test
   void dataPathIsSanitized() {
-    String metadataPath = "file:///path/to/table";
+    String basePath = "file:///path/to/table";
     String dataPath = "file:///path/to/table//data";
     SourceTable sourceTable =
         SourceTable.builder()
             .name("name")
             .formatName("hudi")
-            .metadataPath(metadataPath)
+            .basePath(basePath)
             .dataPath(dataPath)
             .build();
     assertEquals("file:///path/to/table/data", sourceTable.getDataPath());
