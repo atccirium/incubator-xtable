@@ -158,7 +158,7 @@ public class RunSync {
       SourceTable sourceTable =
           SourceTable.builder()
               .name(table.getTableName())
-              .metadataPath(table.getTableBasePath())
+              .basePath(table.getTableBasePath())
               .namespace(table.getNamespace() == null ? null : table.getNamespace().split("\\."))
               .dataPath(table.getTableDataPath())
               .catalogConfig(icebergCatalogConfig)
@@ -171,12 +171,11 @@ public class RunSync {
                   tableFormat ->
                       TargetTable.builder()
                           .name(table.getTableName())
-                          .metadataPath(table.getTableBasePath())
+                          .basePath(table.getTableBasePath())
                           .namespace(
                               table.getNamespace() == null
                                   ? null
                                   : table.getNamespace().split("\\."))
-                          .metadataPath(table.getTableDataPath())
                           .catalogConfig(icebergCatalogConfig)
                           .formatName(tableFormat)
                           .build())

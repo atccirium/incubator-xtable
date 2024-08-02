@@ -393,7 +393,7 @@ class TestIcebergConversionTargetSource {
   private static SourceTable getPerTableConfig(Table catalogSales) {
     return SourceTable.builder()
         .name(catalogSales.name())
-        .metadataPath(catalogSales.location())
+        .basePath(catalogSales.location())
         .formatName(TableFormat.ICEBERG)
         .build();
   }

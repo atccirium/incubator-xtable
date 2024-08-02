@@ -91,7 +91,7 @@ public class TestConversionTargetFactory {
   private TargetTable getPerTableConfig(String tableFormat) {
     return TargetTable.builder()
         .name(getTableName())
-        .metadataPath("/tmp/doesnt/matter")
+        .basePath("/tmp/doesnt/matter")
         .formatName(tableFormat)
         .build();
   }

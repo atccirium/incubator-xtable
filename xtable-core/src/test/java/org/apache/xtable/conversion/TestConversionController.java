@@ -409,7 +409,7 @@ public class TestConversionController {
   }
 
   private Instant getInstantAtLastNMinutes(Instant currentInstant, int n) {
-    return Instant.now().minus(Duration.ofMinutes(n));
+    return currentInstant.minus(Duration.ofMinutes(n));
   }
 
   private ConversionConfig getTableSyncConfig(List<String> targetTableFormats, SyncMode syncMode) {
@@ -417,7 +417,7 @@ public class TestConversionController {
         SourceTable.builder()
             .name("tablename")
             .formatName(HUDI)
-            .metadataPath("/tmp/doesnt/matter")
+            .basePath("/tmp/doesnt/matter")
             .build();
 
     List<TargetTable> targetTables =
@@ -427,7 +427,7 @@ public class TestConversionController {
                     TargetTable.builder()
                         .name("tablename")
                         .formatName(formatName)
-                        .metadataPath("/tmp/doesnt/matter")
+                        .basePath("/tmp/doesnt/matter")
                         .build())
             .collect(Collectors.toList());
 
@@ -435,7 +435,6 @@ public class TestConversionController {
         .sourceTable(sourceTable)
         .targetTables(targetTables)
         .syncMode(syncMode)
-        .properties(Collections.singletonMap("some.property", "value"))
         .build();
   }
 
