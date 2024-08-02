@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -47,17 +46,16 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.annotations.VisibleForTesting;
 
+import org.apache.xtable.conversion.ConversionConfig;
 import org.apache.xtable.conversion.ConversionController;
 import org.apache.xtable.conversion.ConversionSourceProvider;
 import org.apache.xtable.conversion.SourceTable;
-import org.apache.xtable.conversion.TableSyncConfig;
 import org.apache.xtable.conversion.TargetTable;
 import org.apache.xtable.hudi.HudiSourceConfig;
 import org.apache.xtable.iceberg.IcebergCatalogConfig;
 import org.apache.xtable.model.storage.TableFormat;
 import org.apache.xtable.model.sync.SyncMode;
 import org.apache.xtable.reflection.ReflectionUtils;
-import org.apache.xtable.utilities.RunSync.TableFormatConverters.ConversionConfig;
 
 /**
  * Provides a standalone runner for the sync process. See README.md for more details on how to run
@@ -132,7 +130,7 @@ public class RunSync {
     String sourceFormat = datasetConfig.sourceFormat;
     customConfig = getCustomConfigurations(cmd, CONVERTERS_CONFIG_PATH);
     TableFormatConverters tableFormatConverters = loadTableFormatConversionConfigs(customConfig);
-    ConversionConfig sourceConversionConfig =
+    TableFormatConverters.ConversionConfig sourceConversionConfig =
         tableFormatConverters.getTableFormatConverters().get(sourceFormat);
     if (sourceConversionConfig == null) {
       throw new IllegalArgumentException(
@@ -183,14 +181,14 @@ public class RunSync {
                           .build())
               .collect(Collectors.toList());
 
-      TableSyncConfig tableSyncConfig =
-          TableSyncConfig.builder()
+      ConversionConfig conversionConfig =
+          ConversionConfig.builder()
               .sourceTable(sourceTable)
               .targetTables(targetTables)
               .syncMode(SyncMode.INCREMENTAL)
               .build();
       try {
-        conversionController.sync(tableSyncConfig, conversionSourceProvider);
+        conversionController.sync(conversionConfig, conversionSourceProvider);
       } catch (Exception e) {
         log.error(String.format("Error running sync for %s", table.getTableBasePath()), e);
       }

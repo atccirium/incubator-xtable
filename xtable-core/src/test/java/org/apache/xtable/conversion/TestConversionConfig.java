@@ -28,17 +28,17 @@ import org.junit.jupiter.api.Test;
 
 import org.apache.xtable.model.sync.SyncMode;
 
-class TestTableSyncConfig {
+class TestConversionConfig {
 
   @Test
   void defaultValueSet() {
-    TableSyncConfig tableSyncConfig =
-        TableSyncConfig.builder()
+    ConversionConfig conversionConfig =
+        ConversionConfig.builder()
             .sourceTable(mock(SourceTable.class))
             .targetTables(Collections.singletonList(mock(TargetTable.class)))
             .build();
 
-    assertEquals(SyncMode.INCREMENTAL, tableSyncConfig.getSyncMode());
+    assertEquals(SyncMode.INCREMENTAL, conversionConfig.getSyncMode());
   }
 
   @Test
@@ -46,7 +46,7 @@ class TestTableSyncConfig {
     assertThrows(
         NullPointerException.class,
         () ->
-            TableSyncConfig.builder()
+            ConversionConfig.builder()
                 .targetTables(Collections.singletonList(mock(TargetTable.class)))
                 .build());
   }
@@ -57,7 +57,7 @@ class TestTableSyncConfig {
         assertThrows(
             IllegalArgumentException.class,
             () ->
-                TableSyncConfig.builder()
+                ConversionConfig.builder()
                     .sourceTable(mock(SourceTable.class))
                     .targetTables(Collections.emptyList())
                     .build());

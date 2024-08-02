@@ -18,9 +18,7 @@
  
 package org.apache.xtable.conversion;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import lombok.Builder;
 import lombok.NonNull;
@@ -31,7 +29,7 @@ import com.google.common.base.Preconditions;
 import org.apache.xtable.model.sync.SyncMode;
 
 @Value
-public class TableSyncConfig {
+public class ConversionConfig {
   // The source of the sync
   @NonNull SourceTable sourceTable;
   // One or more targets to sync the table metadata to
@@ -40,7 +38,7 @@ public class TableSyncConfig {
   SyncMode syncMode;
 
   @Builder
-  TableSyncConfig(
+  ConversionConfig(
       @NonNull SourceTable sourceTable,
       List<TargetTable> targetTables,
       SyncMode syncMode) {

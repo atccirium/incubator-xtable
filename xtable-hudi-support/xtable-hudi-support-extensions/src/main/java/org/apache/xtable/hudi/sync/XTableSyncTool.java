@@ -23,7 +23,6 @@ import static org.apache.xtable.model.storage.TableFormat.HUDI;
 
 import java.time.Duration;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -38,9 +37,9 @@ import org.apache.hudi.keygen.constant.KeyGeneratorOptions;
 import org.apache.hudi.sync.common.HoodieSyncConfig;
 import org.apache.hudi.sync.common.HoodieSyncTool;
 
+import org.apache.xtable.conversion.ConversionConfig;
 import org.apache.xtable.conversion.ConversionController;
 import org.apache.xtable.conversion.SourceTable;
-import org.apache.xtable.conversion.TableSyncConfig;
 import org.apache.xtable.conversion.TargetTable;
 import org.apache.xtable.hudi.HudiConversionSourceProvider;
 import org.apache.xtable.model.schema.PartitionTransformType;
@@ -70,8 +69,10 @@ public class XTableSyncTool extends HoodieSyncTool {
             .collect(Collectors.toList());
     String basePath = config.getString(HoodieSyncConfig.META_SYNC_BASE_PATH);
     String tableName = config.getString(HoodieTableConfig.HOODIE_TABLE_NAME_KEY);
+    Properties sourceProperties = new Properties();
+    sourceProperties.put(PARTITION_FIELD_SPEC_CONFIG, getPartitionSpecConfig());
     SourceTable sourceTable =
-        SourceTable.builder().name(tableName).formatName(HUDI).metadataPath(basePath).build();
+        SourceTable.builder().name(tableName).formatName(HUDI).basePath(basePath).additionalProperties(sourceProperties).build();
     Duration metadataRetention =
         config.contains(XTableSyncConfig.XTABLE_TARGET_METADATA_RETENTION_HOURS)
             ? Duration.ofHours(
@@ -82,22 +83,20 @@ public class XTableSyncTool extends HoodieSyncTool {
             .map(
                 format ->
                     TargetTable.builder()
-                        .metadataPath(basePath)
+                        .basePath(basePath)
                         .metadataRetention(metadataRetention)
                         .formatName(format)
                         .name(tableName)
                         .build())
             .collect(Collectors.toList());
-    TableSyncConfig tableSyncConfig =
-        TableSyncConfig.builder()
+    ConversionConfig conversionConfig =
+        ConversionConfig.builder()
             .sourceTable(sourceTable)
             .targetTables(targetTables)
             .syncMode(SyncMode.INCREMENTAL)
-            .properties(
-                Collections.singletonMap(PARTITION_FIELD_SPEC_CONFIG, getPartitionSpecConfig()))
             .build();
     Map<String, SyncResult> results =
-        new ConversionController(hadoopConf).sync(tableSyncConfig, hudiConversionSourceProvider);
+        new ConversionController(hadoopConf).sync(conversionConfig, hudiConversionSourceProvider);
     String failingFormats =
         results.entrySet().stream()
             .filter(
