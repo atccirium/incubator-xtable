@@ -415,8 +415,7 @@ public class ITDeltaConversionTargetSource {
         InstantsForIncrementalSync.builder()
             .lastSyncInstant(Instant.ofEpochMilli(timestamp1))
             .build();
-    conversionSource =
-        conversionSourceProvider.getConversionSourceInstance(tableConfig);
+    conversionSource = conversionSourceProvider.getConversionSourceInstance(tableConfig);
     CommitsBacklog<Long> instantCurrentCommitState =
         conversionSource.getCommitsBacklog(instantsForIncrementalSync);
     boolean areFilesRemoved = false;

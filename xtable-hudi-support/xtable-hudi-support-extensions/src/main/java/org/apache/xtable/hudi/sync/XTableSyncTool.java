@@ -72,7 +72,12 @@ public class XTableSyncTool extends HoodieSyncTool {
     Properties sourceProperties = new Properties();
     sourceProperties.put(PARTITION_FIELD_SPEC_CONFIG, getPartitionSpecConfig());
     SourceTable sourceTable =
-        SourceTable.builder().name(tableName).formatName(HUDI).basePath(basePath).additionalProperties(sourceProperties).build();
+        SourceTable.builder()
+            .name(tableName)
+            .formatName(HUDI)
+            .basePath(basePath)
+            .additionalProperties(sourceProperties)
+            .build();
     Duration metadataRetention =
         config.contains(XTableSyncConfig.XTABLE_TARGET_METADATA_RETENTION_HOURS)
             ? Duration.ofHours(

@@ -32,8 +32,7 @@ import org.apache.xtable.conversion.SourceTable;
 public class HudiConversionSourceProvider extends ConversionSourceProvider<HoodieInstant> {
 
   @Override
-  public HudiConversionSource getConversionSourceInstance(
-      SourceTable sourceTable) {
+  public HudiConversionSource getConversionSourceInstance(SourceTable sourceTable) {
     HoodieTableMetaClient metaClient =
         HoodieTableMetaClient.builder()
             .setConf(hadoopConf)
@@ -45,7 +44,8 @@ public class HudiConversionSourceProvider extends ConversionSourceProvider<Hoodi
     }
 
     final HudiSourcePartitionSpecExtractor sourcePartitionSpecExtractor =
-        HudiSourceConfig.fromProperties(sourceTable.getAdditionalProperties()).loadSourcePartitionSpecExtractor();
+        HudiSourceConfig.fromProperties(sourceTable.getAdditionalProperties())
+            .loadSourcePartitionSpecExtractor();
 
     return new HudiConversionSource(metaClient, sourcePartitionSpecExtractor);
   }

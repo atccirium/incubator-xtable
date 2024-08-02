@@ -39,9 +39,7 @@ public class ConversionConfig {
 
   @Builder
   ConversionConfig(
-      @NonNull SourceTable sourceTable,
-      List<TargetTable> targetTables,
-      SyncMode syncMode) {
+      @NonNull SourceTable sourceTable, List<TargetTable> targetTables, SyncMode syncMode) {
     this.sourceTable = sourceTable;
     this.targetTables = targetTables;
     Preconditions.checkArgument(

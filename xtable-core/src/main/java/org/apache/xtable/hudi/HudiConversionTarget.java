@@ -116,8 +116,7 @@ public class HudiConversionTarget implements ConversionTarget {
         (int) targetTable.getMetadataRetention().toHours(),
         maxNumDeltaCommitsBeforeCompaction,
         BaseFileUpdatesExtractor.of(
-            new HoodieJavaEngineContext(configuration),
-            new CachingPath(targetTable.getBasePath())),
+            new HoodieJavaEngineContext(configuration), new CachingPath(targetTable.getBasePath())),
         AvroSchemaConverter.getInstance(),
         HudiTableManager.of(configuration),
         CommitState::new);
@@ -169,8 +168,7 @@ public class HudiConversionTarget implements ConversionTarget {
         (int) targetTable.getMetadataRetention().toHours(),
         HoodieMetadataConfig.COMPACT_NUM_DELTA_COMMITS.defaultValue(),
         BaseFileUpdatesExtractor.of(
-            new HoodieJavaEngineContext(configuration),
-            new CachingPath(targetTable.getBasePath())),
+            new HoodieJavaEngineContext(configuration), new CachingPath(targetTable.getBasePath())),
         AvroSchemaConverter.getInstance(),
         HudiTableManager.of(configuration),
         CommitState::new);

@@ -152,7 +152,8 @@ public class RunSync {
           tableFormatList);
       Properties sourceProperties = new Properties();
       if (table.getPartitionSpec() != null) {
-        sourceProperties.put(HudiSourceConfig.PARTITION_FIELD_SPEC_CONFIG, table.getPartitionSpec());
+        sourceProperties.put(
+            HudiSourceConfig.PARTITION_FIELD_SPEC_CONFIG, table.getPartitionSpec());
       }
       SourceTable sourceTable =
           SourceTable.builder()

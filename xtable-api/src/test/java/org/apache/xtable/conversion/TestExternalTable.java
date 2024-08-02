@@ -42,7 +42,8 @@ public class TestExternalTable {
   @Test
   void errorIfRequiredArgsNotSet() {
     assertThrows(
-        NullPointerException.class, () -> new ExternalTable("name", "hudi", null, null, null, null));
+        NullPointerException.class,
+        () -> new ExternalTable("name", "hudi", null, null, null, null));
 
     assertThrows(
         NullPointerException.class,

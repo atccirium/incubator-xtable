@@ -18,8 +18,6 @@
  
 package org.apache.xtable.delta;
 
-import java.util.Map;
-
 import org.apache.spark.sql.SparkSession;
 
 import io.delta.tables.DeltaTable;

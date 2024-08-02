@@ -39,10 +39,10 @@ import org.apache.hudi.config.HoodieArchivalConfig;
 
 import org.apache.xtable.GenericTable;
 import org.apache.xtable.TestJavaHudiTable;
+import org.apache.xtable.conversion.ConversionConfig;
 import org.apache.xtable.conversion.ConversionController;
 import org.apache.xtable.conversion.ConversionSourceProvider;
 import org.apache.xtable.conversion.SourceTable;
-import org.apache.xtable.conversion.ConversionConfig;
 import org.apache.xtable.conversion.TargetTable;
 import org.apache.xtable.hudi.HudiConversionSourceProvider;
 import org.apache.xtable.model.storage.TableFormat;

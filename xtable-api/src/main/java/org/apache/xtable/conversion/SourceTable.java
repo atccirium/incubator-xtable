@@ -18,19 +18,17 @@
  
 package org.apache.xtable.conversion;
 
+import java.util.Properties;
+
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 
-import java.util.Properties;
-
 @EqualsAndHashCode(callSuper = true)
 @Getter
 public class SourceTable extends ExternalTable {
-  /**
-   * The path to the data files, defaults to the metadataPath
-   */
+  /** The path to the data files, defaults to the metadataPath */
   @NonNull private final String dataPath;
 
   @Builder(toBuilder = true)
