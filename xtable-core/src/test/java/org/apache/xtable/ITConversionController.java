@@ -854,7 +854,9 @@ public class ITConversionController {
       String partitionConfig,
       Duration metadataRetention) {
     Properties sourceProperties = new Properties();
-    sourceProperties.put(PARTITION_FIELD_SPEC_CONFIG, partitionConfig);
+    if (partitionConfig != null) {
+      sourceProperties.put(PARTITION_FIELD_SPEC_CONFIG, partitionConfig);
+    }
     SourceTable sourceTable =
         SourceTable.builder()
             .name(tableName)
